@@ -8,30 +8,31 @@ public class RPCUtils {
 	
 	public static byte[] encapsulate(byte rpcid, byte[] payload) {
 		
-		byte[] rpcmsg = null;
-		
+
 		// TODO - START
 		
 		// Encapsulate the rpcid and payload in a byte array according to the RPC message syntax / format
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+
+        byte[] rpcmsg = new byte[payload.length + 1];
+
+        rpcmsg[0] = rpcid;
+
+        System.arraycopy(payload, 0, rpcmsg, 1, payload.length);
+
+        // TODO - END
 		
 		return rpcmsg;
 	}
 	
 	public static byte[] decapsulate(byte[] rpcmsg) {
 		
-		byte[] payload = null;
+		byte[] payload = new byte[rpcmsg.length - 1];
 		
 		// TODO - START
 		
 		// Decapsulate the rpcid and payload in a byte array according to the RPC message syntax
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+
+        System.arraycopy(rpcmsg, 1, payload, 0, payload.length);
 		
 		// TODO - END
 		
@@ -43,7 +44,10 @@ public class RPCUtils {
 	public static byte[] marshallString(String str) {
 		
 		byte[] encoded = null;
-		
+
+        if(encoded == str.length()){
+            return str.getBytes();
+        }
 		// TODO - START 
 		
 		if (true)
