@@ -45,14 +45,14 @@ public class RPCUtils {
 		
 		byte[] encoded = null;
 
-        if(encoded == str.length()){
-            return str.getBytes();
+        // TODO - START
+
+        if(str == null){
+            encoded = new byte[0];
+        } else {
+            encoded = str.getBytes();
         }
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+
 		// TODO - END
 		
 		return encoded;
@@ -63,11 +63,13 @@ public class RPCUtils {
 		
 		String decoded = null; 
 		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+		// TODO - START
+
+        if(data == null || data.length == 0){
+            decoded = "";
+        } else{
+            decoded = new String(data);
+        }
 		// TODO - END
 		
 		return decoded;
@@ -76,11 +78,10 @@ public class RPCUtils {
 	public static byte[] marshallVoid() {
 		
 		byte[] encoded = null;
-		
+
 		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
+
+        encoded = new byte[0];
 				
 		// TODO - END
 		
@@ -92,9 +93,7 @@ public class RPCUtils {
 		
 		// TODO
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+
 	}
 
 	// convert boolean to a byte array representation
@@ -124,12 +123,15 @@ public class RPCUtils {
 		
 		byte[] encoded = null;
 		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		// TODO - START
+
+        encoded = new byte[4];
+        encoded[0] = (byte) (x >> 24);
+        encoded[1] = (byte) (x >> 16);
+        encoded[2] = (byte) (x >> 8);
+        encoded[3] = (byte) x;
+
+        // TODO - END
 		
 		return encoded;
 	}
@@ -139,11 +141,12 @@ public class RPCUtils {
 		
 		int decoded = 0;
 		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+		// TODO - START
+
+        decoded |= (data[0] & 0xFF) << 24;
+        decoded |= (data[1] & 0xFF) << 16;
+        decoded |= (data[2] & 0xFF) << 8;
+        decoded |= (data[3] & 0xFF);
 		// TODO - END
 		
 		return decoded;
