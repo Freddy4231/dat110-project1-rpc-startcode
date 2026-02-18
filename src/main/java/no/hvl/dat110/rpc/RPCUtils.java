@@ -47,11 +47,17 @@ public class RPCUtils {
 
         // TODO - START
 
-        if(str == null){
-            encoded = new byte[0];
-        } else {
-            encoded = str.getBytes();
-        }
+        if (str == null) str = "";
+
+        byte[] sbytes = str.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+
+        int len = Math.min(sbytes.length, 127);
+
+        encoded = new byte[len + 1];
+        encoded[0] = (byte) len;
+
+        System.arraycopy(sbytes, 0, encoded, 1, len);
+
 
 		// TODO - END
 		
@@ -65,14 +71,17 @@ public class RPCUtils {
 		
 		// TODO - START
 
-        if(data == null || data.length == 0){
-            decoded = "";
-        } else{
-            decoded = new String(data);
+        if (data == null || data.length == 0) return "";
+
+        int len = data[0] & 0xFF;
+
+        if (len > data.length - 1) {
+            len = data.length - 1;
         }
+
+        return new String(data, 1, len, java.nio.charset.StandardCharsets.UTF_8);
 		// TODO - END
 		
-		return decoded;
 	}
 	
 	public static byte[] marshallVoid() {

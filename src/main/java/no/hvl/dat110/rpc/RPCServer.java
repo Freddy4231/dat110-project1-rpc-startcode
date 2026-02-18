@@ -53,13 +53,16 @@ public class RPCServer {
 
             requestmsg = connection.receive();
 
-            byte[] rpcRequest = requestmsg.getData();
+            byte[] rpcrequest = requestmsg.getData();
 
-            rpcid = rpcRequest[0];
+            rpcid = rpcrequest[0];
 
-            byte[] param = RPCUtils.encapsulate(rpcid, rpcRequest);
+            byte[] param = RPCUtils.decapsulate(rpcrequest);
 
             RPCRemoteImpl impl = services.get(rpcid);
+            if (impl == null) {
+                throw new RuntimeException("No RPC service registered for rpcid=" + rpcid);
+            }
 
             byte[] retval = impl.invoke(param);
 
@@ -67,6 +70,13 @@ public class RPCServer {
 
             replymsg = new Message(rpcreply);
             connection.send(replymsg);
+
+
+
+
+
+
+
 
 		   
 		   // TODO - END
